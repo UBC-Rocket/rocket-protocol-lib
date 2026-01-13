@@ -53,3 +53,11 @@ dkms.conf
 
 # Debug information files
 *.dwo
+
+# CMake
+build/
+
+# Personal VSCode configuration files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
