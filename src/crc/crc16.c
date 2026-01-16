@@ -8,6 +8,10 @@ uint16_t crc16_ccitt(const uint8_t *data, size_t length)
     uint8_t e;
     uint8_t f;
 
+    if (data == NULL) {
+        return crc;
+    }
+
     for (; length > 0; length--) {
         e = crc ^ *data;
         data++;
