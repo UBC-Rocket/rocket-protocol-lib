@@ -31,7 +31,7 @@ set_property(
         C_EXTENSIONS OFF
 )
 
-target_include_directories(rocket-protocol
+target_link_libraries(rocket-protocol
     PUBLIC
         rp_library_interface
 )
