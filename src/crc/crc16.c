@@ -2,6 +2,16 @@
 
 #include <stdint.h>
 
+/**
+ * Computes the checksum of the data using the CRC-16/KERMIT algorithm.
+ *
+ * The computation is performed 1 byte at a time according to the algorithm described
+ * in https://en.wikipedia.org/wiki/Computation_of_cyclic_redundancy_checks#Examples_for_sparse_polynomials.
+ *
+ * @param data Buffer of bytes to compute the checksum for
+ * @param length Number of bytes in the data buffer
+ * @return uint16_t
+ */
 uint16_t crc16_ccitt(const uint8_t *data, size_t length)
 {
     uint16_t crc = CRC16_CCITT_INITIAL_VALUE;
