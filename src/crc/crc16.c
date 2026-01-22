@@ -3,7 +3,7 @@
 #include <stdint.h>
 
 /**
- * Computes the checksum of the data using the CRC-16/KERMIT algorithm.
+ * Computes the checksum of the data using the CRC-16/KERMIT (CCITT) algorithm.
  *
  * The computation is performed 1 byte at a time according to the algorithm described
  * in https://en.wikipedia.org/wiki/Computation_of_cyclic_redundancy_checks#Examples_for_sparse_polynomials.
