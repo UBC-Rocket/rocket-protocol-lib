@@ -26,7 +26,7 @@ uint16_t crc16_ccitt(const uint8_t *data, size_t length)
         e = crc ^ *data;
         data++;
         f = e ^ (e << 4);
-        crc = (crc >> 8) ^ (f << 8) ^ (f << 3) ^ (f >> 4);
+        crc = (crc >> 8) ^ ((uint16_t)f << 8) ^ ((uint16_t)f << 3) ^ ((uint16_t)f >> 4);
     }
 
     return crc;
