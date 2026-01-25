@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-#include "srp/crc/crc.h"
+#include "rp/crc/crc.h"
 #include "unity_internals.h"
 
 void setUp(void)
