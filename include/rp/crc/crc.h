@@ -1,5 +1,5 @@
-#ifndef SRP_CRC_H
-#define SRP_CRC_H
+#ifndef RP_CRC_H
+#define RP_CRC_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -9,4 +9,4 @@
 
 uint16_t crc16_ccitt(const uint8_t *data, size_t length);
 
-#endif // SRP_CRC_H
+#endif // RP_CRC_H
