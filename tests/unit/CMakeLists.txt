@@ -36,3 +36,27 @@ add_unity_test(
     LIBRARIES
         rp_crc
 )
+
+add_unity_test(
+    NAME "cobs_encode"
+    SOURCES
+        cobs/test_cobs_encode.c
+    LIBRARIES
+        rp_cobs
+)
+
+add_unity_test(
+    NAME "cobs_decode"
+    SOURCES
+        cobs/test_cobs_decode.c
+    LIBRARIES
+        rp_cobs
+)
+
+add_unity_test(
+    NAME "cobs_get_max_encoded_size"
+    SOURCES
+        cobs/test_cobs_get_max_encoded_size.c
+    LIBRARIES
+        rp_cobs
+)
