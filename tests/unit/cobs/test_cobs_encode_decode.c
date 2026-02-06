@@ -51,7 +51,8 @@ void test_cobs_decode_only_delimiter_data(void)
     uint8_t encoded[COBS_MAX_TEST_ENCODED_SIZE];
     uint8_t decoded[sizeof(data)];
 
-    test_encode_decode_success(data, 0, encoded, sizeof(encoded), decoded, sizeof(decoded));
+    test_encode_decode_success(data, sizeof(data), encoded, sizeof(encoded), decoded,
+                               sizeof(decoded));
 }
 
 void test_cobs_decode_delimiter_interleaved_data(void)
@@ -69,7 +70,8 @@ void test_cobs_decode_delimiter_interleaved_data(void)
     uint8_t encoded[COBS_MAX_TEST_ENCODED_SIZE];
     uint8_t decoded[sizeof(data)];
 
-    test_encode_decode_success(data, 0, encoded, sizeof(encoded), decoded, sizeof(decoded));
+    test_encode_decode_success(data, sizeof(data), encoded, sizeof(encoded), decoded,
+                               sizeof(decoded));
 }
 
 void test_cobs_decode_random_data_1(void)
@@ -81,7 +83,8 @@ void test_cobs_decode_random_data_1(void)
     uint8_t encoded[COBS_MAX_TEST_ENCODED_SIZE];
     uint8_t decoded[sizeof(data)];
 
-    test_encode_decode_success(data, 0, encoded, sizeof(encoded), decoded, sizeof(decoded));
+    test_encode_decode_success(data, sizeof(data), encoded, sizeof(encoded), decoded,
+                               sizeof(decoded));
 }
 
 void test_cobs_decode_random_data_2(void)
@@ -95,7 +98,8 @@ void test_cobs_decode_random_data_2(void)
     uint8_t encoded[COBS_MAX_TEST_ENCODED_SIZE];
     uint8_t decoded[sizeof(data)];
 
-    test_encode_decode_success(data, 0, encoded, sizeof(encoded), decoded, sizeof(decoded));
+    test_encode_decode_success(data, sizeof(data), encoded, sizeof(encoded), decoded,
+                               sizeof(decoded));
 }
 
 int main(void)
