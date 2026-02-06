@@ -13,6 +13,7 @@ typedef enum cobs_status {
     COBS_OUTPUT_OVERFLOW,
     COBS_INPUT_TOO_SHORT,
     COBS_UNEXPECTED_DELIMITER,
+    COBS_MISSING_DELIMITER,
 } cobs_status_t;
 
 typedef struct cobs_encode_result {

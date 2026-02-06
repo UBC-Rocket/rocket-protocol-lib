@@ -110,14 +110,10 @@ cobs_result_t cobs_decode(const uint8_t *data, size_t data_size, uint8_t *output
     size_t output_idx = 0;          /**< Index to the next free byte in the output buffer */
     uint8_t code = 0xFF;            /**< Offset to the next delimiter byte */
     uint8_t remaining_bytes = 0x00; /**< Remaining bytes in the block */
+    bool found_delimiter = false;   /**< Is parsing terminated by reaching the delimiter */
 
     for (size_t i = 0; i < data_size; i++) {
         uint8_t byte = data[i];
-
-        if (output_idx > output_capacity) {
-            result.status = COBS_OUTPUT_OVERFLOW;
-            return result;
-        }
 
         if (byte == COBS_DELIMITER_BYTE) {
             // Delimiter appeared in the middle of the encoded data
@@ -127,7 +123,15 @@ cobs_result_t cobs_decode(const uint8_t *data, size_t data_size, uint8_t *output
             }
 
             // Actual end of COBS encoded data
+            found_delimiter = true;
             break;
+        }
+
+        // Following code could write one byte to the output,
+        // must check if there is room in the output buffer
+        if (output_idx >= output_capacity) {
+            result.status = COBS_OUTPUT_OVERFLOW;
+            return result;
         }
 
         // Data bytes within a block
@@ -148,6 +152,11 @@ cobs_result_t cobs_decode(const uint8_t *data, size_t data_size, uint8_t *output
 
         code = byte;
         remaining_bytes = code - 1;
+    }
+
+    if (!found_delimiter) {
+        result.status = COBS_MISSING_DELIMITER;
+        return result;
     }
 
     result.status = COBS_OK;
