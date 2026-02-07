@@ -107,10 +107,10 @@ cobs_result_t cobs_decode(const uint8_t *data, size_t data_size, uint8_t *output
         return result;
     }
 
-    size_t output_idx = 0;          /**< Index to the next free byte in the output buffer */
-    uint8_t code = 0xFF;            /**< Offset to the next delimiter byte */
-    uint8_t remaining_bytes = 0x00; /**< Remaining bytes in the block */
-    bool found_delimiter = false;   /**< Is parsing terminated by reaching the delimiter */
+    size_t output_idx = 0;        /**< Index to the next free byte in the output buffer */
+    uint8_t code = 0xFF;          /**< Offset to the next delimiter byte */
+    uint8_t remaining_bytes = 0;  /**< Remaining bytes in the block */
+    bool found_delimiter = false; /**< Is parsing terminated by reaching the delimiter */
 
     for (size_t i = 0; i < data_size; i++) {
         uint8_t byte = data[i];
