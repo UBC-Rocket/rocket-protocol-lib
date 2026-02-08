@@ -6,6 +6,7 @@
 #include <stdint.h>
 
 #define COBS_DELIMITER_BYTE (0x00)
+#define COBS_ENCODED_MIN_SIZE (2)
 
 typedef enum cobs_status {
     COBS_OK,

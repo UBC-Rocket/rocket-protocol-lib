@@ -24,8 +24,7 @@ cobs_result_t cobs_encode(const uint8_t *data, size_t data_size, uint8_t *output
         return result;
     }
 
-    // Smallest message is 2 bytes (code + delimiter)
-    if (output_capacity < 2) {
+    if (output_capacity < COBS_ENCODED_MIN_SIZE) {
         result.status = COBS_OUTPUT_OVERFLOW;
         return result;
     }
@@ -101,8 +100,7 @@ cobs_result_t cobs_decode(const uint8_t *data, size_t data_size, uint8_t *output
         return result;
     }
 
-    // Smallest message is 2 bytes (code + delimiter)
-    if (data_size < 2) {
+    if (data_size < COBS_ENCODED_MIN_SIZE) {
         result.status = COBS_INPUT_TOO_SHORT;
         return result;
     }
@@ -175,7 +173,7 @@ cobs_result_t cobs_decode(const uint8_t *data, size_t data_size, uint8_t *output
 size_t cobs_get_max_encoded_size(size_t data_size)
 {
     if (data_size == 0) {
-        return 2;
+        return COBS_ENCODED_MIN_SIZE;
     }
 
     // `ceil(a / b)` implemented as `(a + b - 1) / b`
