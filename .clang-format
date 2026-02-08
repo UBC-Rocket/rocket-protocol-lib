@@ -16,3 +16,6 @@ IndentGotoLabels: false
 SortIncludes:
     Enabled: false
 ReflowComments: IndentOnly
+---
+Language: Proto
+BreakBeforeBraces: Attach
