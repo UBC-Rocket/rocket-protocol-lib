@@ -17,7 +17,7 @@ typedef enum cobs_status {
     COBS_MISSING_DELIMITER,
 } cobs_status_t;
 
-typedef struct cobs_encode_result {
+typedef struct cobs_result {
     size_t written;       /**< Number of bytes written to the output buffer */
     cobs_status_t status; /**< Status of the operation */
 } cobs_result_t;
