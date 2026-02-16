@@ -3,7 +3,7 @@ add_subdirectory(cobs)
 
 target_sources(${CMAKE_PROJECT_NAME}
     PRIVATE
-        protocol.c
+        codec.c
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
