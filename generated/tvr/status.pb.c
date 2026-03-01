@@ -6,7 +6,7 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(tvr_SystemStatus, tvr_SystemStatus, AUTO)
+PB_BIND(TVR_SYSTEM_STATUS, tvr_system_status_t, AUTO)
 
 
 

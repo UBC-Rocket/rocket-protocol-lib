@@ -10,27 +10,27 @@
 #endif
 
 /* Enum definitions */
-typedef enum _tvr_FlightState {
-    tvr_FlightState_FLIGHT_STATE_IDLE = 0,
-    tvr_FlightState_FLIGHT_STATE_ESTOP = 1,
-    tvr_FlightState_FLIGHT_STATE_RISE = 2,
-    tvr_FlightState_FLIGHT_STATE_HOVER = 3,
-    tvr_FlightState_FLIGHT_STATE_LOWER = 4
-} tvr_FlightState;
+typedef enum tvr_flight_state {
+    TVR_FLIGHT_STATE_FLIGHT_STATE_IDLE = 0,
+    TVR_FLIGHT_STATE_FLIGHT_STATE_ESTOP = 1,
+    TVR_FLIGHT_STATE_FLIGHT_STATE_RISE = 2,
+    TVR_FLIGHT_STATE_FLIGHT_STATE_HOVER = 3,
+    TVR_FLIGHT_STATE_FLIGHT_STATE_LOWER = 4
+} tvr_flight_state_t;
 
 /* Struct definitions */
-typedef struct _tvr_Vec3 {
+typedef struct tvr_vec3 {
     float x;
     float y;
     float z;
-} tvr_Vec3;
+} tvr_vec3_t;
 
-typedef struct _tvr_Quaternion {
+typedef struct tvr_quaternion {
     float w;
     float x;
     float y;
     float z;
-} tvr_Quaternion;
+} tvr_quaternion_t;
 
 
 #ifdef __cplusplus
@@ -38,55 +38,55 @@ extern "C" {
 #endif
 
 /* Helper constants for enums */
-#define _tvr_FlightState_MIN tvr_FlightState_FLIGHT_STATE_IDLE
-#define _tvr_FlightState_MAX tvr_FlightState_FLIGHT_STATE_LOWER
-#define _tvr_FlightState_ARRAYSIZE ((tvr_FlightState)(tvr_FlightState_FLIGHT_STATE_LOWER+1))
+#define _TVR_FLIGHT_STATE_MIN TVR_FLIGHT_STATE_FLIGHT_STATE_IDLE
+#define _TVR_FLIGHT_STATE_MAX TVR_FLIGHT_STATE_FLIGHT_STATE_LOWER
+#define _TVR_FLIGHT_STATE_ARRAYSIZE ((tvr_flight_state_t)(TVR_FLIGHT_STATE_FLIGHT_STATE_LOWER+1))
 
 
 
 
 /* Initializer values for message structs */
-#define tvr_Vec3_init_default                    {0, 0, 0}
-#define tvr_Quaternion_init_default              {0, 0, 0, 0}
-#define tvr_Vec3_init_zero                       {0, 0, 0}
-#define tvr_Quaternion_init_zero                 {0, 0, 0, 0}
+#define TVR_VEC3_INIT_DEFAULT                    {0, 0, 0}
+#define TVR_QUATERNION_INIT_DEFAULT              {0, 0, 0, 0}
+#define TVR_VEC3_INIT_ZERO                       {0, 0, 0}
+#define TVR_QUATERNION_INIT_ZERO                 {0, 0, 0, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define tvr_Vec3_x_tag                           1
-#define tvr_Vec3_y_tag                           2
-#define tvr_Vec3_z_tag                           3
-#define tvr_Quaternion_w_tag                     1
-#define tvr_Quaternion_x_tag                     2
-#define tvr_Quaternion_y_tag                     3
-#define tvr_Quaternion_z_tag                     4
+#define TVR_VEC3_X_TAG                           1
+#define TVR_VEC3_Y_TAG                           2
+#define TVR_VEC3_Z_TAG                           3
+#define TVR_QUATERNION_W_TAG                     1
+#define TVR_QUATERNION_X_TAG                     2
+#define TVR_QUATERNION_Y_TAG                     3
+#define TVR_QUATERNION_Z_TAG                     4
 
 /* Struct field encoding specification for nanopb */
-#define tvr_Vec3_FIELDLIST(X, a) \
+#define TVR_VEC3_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, FLOAT,    x,                 1) \
 X(a, STATIC,   SINGULAR, FLOAT,    y,                 2) \
 X(a, STATIC,   SINGULAR, FLOAT,    z,                 3)
-#define tvr_Vec3_CALLBACK NULL
-#define tvr_Vec3_DEFAULT NULL
+#define TVR_VEC3_CALLBACK NULL
+#define TVR_VEC3_DEFAULT NULL
 
-#define tvr_Quaternion_FIELDLIST(X, a) \
+#define TVR_QUATERNION_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, FLOAT,    w,                 1) \
 X(a, STATIC,   SINGULAR, FLOAT,    x,                 2) \
 X(a, STATIC,   SINGULAR, FLOAT,    y,                 3) \
 X(a, STATIC,   SINGULAR, FLOAT,    z,                 4)
-#define tvr_Quaternion_CALLBACK NULL
-#define tvr_Quaternion_DEFAULT NULL
+#define TVR_QUATERNION_CALLBACK NULL
+#define TVR_QUATERNION_DEFAULT NULL
 
-extern const pb_msgdesc_t tvr_Vec3_msg;
-extern const pb_msgdesc_t tvr_Quaternion_msg;
+extern const pb_msgdesc_t tvr_vec3_t_msg;
+extern const pb_msgdesc_t tvr_quaternion_t_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define tvr_Vec3_fields &tvr_Vec3_msg
-#define tvr_Quaternion_fields &tvr_Quaternion_msg
+#define TVR_VEC3_FIELDS &tvr_vec3_t_msg
+#define TVR_QUATERNION_FIELDS &tvr_quaternion_t_msg
 
 /* Maximum encoded size of messages (where known) */
-#define TVR_COMMON_PB_H_MAX_SIZE                 tvr_Quaternion_size
-#define tvr_Quaternion_size                      20
-#define tvr_Vec3_size                            15
+#define TVR_COMMON_PB_H_MAX_SIZE                 TVR_QUATERNION_SIZE
+#define TVR_QUATERNION_SIZE                      20
+#define TVR_VEC3_SIZE                            15
 
 #ifdef __cplusplus
 } /* extern "C" */

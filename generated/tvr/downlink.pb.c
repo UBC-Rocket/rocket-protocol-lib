@@ -6,7 +6,7 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(tvr_Downlink, tvr_Downlink, AUTO)
+PB_BIND(TVR_DOWNLINK, tvr_downlink_t, AUTO)
 
 
 

@@ -12,25 +12,25 @@
 
 /* Struct definitions */
 /* Full state + control output, sent at 10Hz from FC to ground station. */
-typedef struct _tvr_TelemetryState {
+typedef struct tvr_telemetry_state {
     /* Timestamp (ms since boot, wraps at ~49 days) */
     uint32_t timestamp_ms;
     /* EKF state (nav frame) */
     bool has_position;
-    tvr_Vec3 position; /* [m] */
+    tvr_vec3_t position; /* [m] */
     bool has_velocity;
-    tvr_Vec3 velocity; /* [m/s] */
+    tvr_vec3_t velocity; /* [m/s] */
     bool has_attitude;
-    tvr_Quaternion attitude; /* body-to-nav */
+    tvr_quaternion_t attitude; /* body-to-nav */
     bool has_angular_rate;
-    tvr_Vec3 angular_rate; /* [rad/s] body frame */
+    tvr_vec3_t angular_rate; /* [rad/s] body frame */
     /* Flight state machine */
-    tvr_FlightState flight_state;
+    tvr_flight_state_t flight_state;
     /* Control outputs (for ground display / debugging) */
     float thrust_cmd; /* [N] */
     float gimbal_x; /* [rad] */
     float gimbal_y; /* [rad] */
-} tvr_TelemetryState;
+} tvr_telemetry_state_t;
 
 
 #ifdef __cplusplus
@@ -38,22 +38,22 @@ extern "C" {
 #endif
 
 /* Initializer values for message structs */
-#define tvr_TelemetryState_init_default          {0, false, tvr_Vec3_init_default, false, tvr_Vec3_init_default, false, tvr_Quaternion_init_default, false, tvr_Vec3_init_default, _tvr_FlightState_MIN, 0, 0, 0}
-#define tvr_TelemetryState_init_zero             {0, false, tvr_Vec3_init_zero, false, tvr_Vec3_init_zero, false, tvr_Quaternion_init_zero, false, tvr_Vec3_init_zero, _tvr_FlightState_MIN, 0, 0, 0}
+#define TVR_TELEMETRY_STATE_INIT_DEFAULT         {0, false, TVR_VEC3_INIT_DEFAULT, false, TVR_VEC3_INIT_DEFAULT, false, TVR_QUATERNION_INIT_DEFAULT, false, TVR_VEC3_INIT_DEFAULT, _TVR_FLIGHT_STATE_MIN, 0, 0, 0}
+#define TVR_TELEMETRY_STATE_INIT_ZERO            {0, false, TVR_VEC3_INIT_ZERO, false, TVR_VEC3_INIT_ZERO, false, TVR_QUATERNION_INIT_ZERO, false, TVR_VEC3_INIT_ZERO, _TVR_FLIGHT_STATE_MIN, 0, 0, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define tvr_TelemetryState_timestamp_ms_tag      1
-#define tvr_TelemetryState_position_tag          2
-#define tvr_TelemetryState_velocity_tag          3
-#define tvr_TelemetryState_attitude_tag          4
-#define tvr_TelemetryState_angular_rate_tag      5
-#define tvr_TelemetryState_flight_state_tag      6
-#define tvr_TelemetryState_thrust_cmd_tag        7
-#define tvr_TelemetryState_gimbal_x_tag          8
-#define tvr_TelemetryState_gimbal_y_tag          9
+#define TVR_TELEMETRY_STATE_TIMESTAMP_MS_TAG     1
+#define TVR_TELEMETRY_STATE_POSITION_TAG         2
+#define TVR_TELEMETRY_STATE_VELOCITY_TAG         3
+#define TVR_TELEMETRY_STATE_ATTITUDE_TAG         4
+#define TVR_TELEMETRY_STATE_ANGULAR_RATE_TAG     5
+#define TVR_TELEMETRY_STATE_FLIGHT_STATE_TAG     6
+#define TVR_TELEMETRY_STATE_THRUST_CMD_TAG       7
+#define TVR_TELEMETRY_STATE_GIMBAL_X_TAG         8
+#define TVR_TELEMETRY_STATE_GIMBAL_Y_TAG         9
 
 /* Struct field encoding specification for nanopb */
-#define tvr_TelemetryState_FIELDLIST(X, a) \
+#define TVR_TELEMETRY_STATE_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   timestamp_ms,      1) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  position,          2) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  velocity,          3) \
@@ -63,21 +63,21 @@ X(a, STATIC,   SINGULAR, UENUM,    flight_state,      6) \
 X(a, STATIC,   SINGULAR, FLOAT,    thrust_cmd,        7) \
 X(a, STATIC,   SINGULAR, FLOAT,    gimbal_x,          8) \
 X(a, STATIC,   SINGULAR, FLOAT,    gimbal_y,          9)
-#define tvr_TelemetryState_CALLBACK NULL
-#define tvr_TelemetryState_DEFAULT NULL
-#define tvr_TelemetryState_position_MSGTYPE tvr_Vec3
-#define tvr_TelemetryState_velocity_MSGTYPE tvr_Vec3
-#define tvr_TelemetryState_attitude_MSGTYPE tvr_Quaternion
-#define tvr_TelemetryState_angular_rate_MSGTYPE tvr_Vec3
+#define TVR_TELEMETRY_STATE_CALLBACK NULL
+#define TVR_TELEMETRY_STATE_DEFAULT NULL
+#define tvr_telemetry_state_t_position_MSGTYPE tvr_vec3_t
+#define tvr_telemetry_state_t_velocity_MSGTYPE tvr_vec3_t
+#define tvr_telemetry_state_t_attitude_MSGTYPE tvr_quaternion_t
+#define tvr_telemetry_state_t_angular_rate_MSGTYPE tvr_vec3_t
 
-extern const pb_msgdesc_t tvr_TelemetryState_msg;
+extern const pb_msgdesc_t tvr_telemetry_state_t_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define tvr_TelemetryState_fields &tvr_TelemetryState_msg
+#define TVR_TELEMETRY_STATE_FIELDS &tvr_telemetry_state_t_msg
 
 /* Maximum encoded size of messages (where known) */
-#define TVR_TELEMETRY_PB_H_MAX_SIZE              tvr_TelemetryState_size
-#define tvr_TelemetryState_size                  96
+#define TVR_TELEMETRY_PB_H_MAX_SIZE              TVR_TELEMETRY_STATE_SIZE
+#define TVR_TELEMETRY_STATE_SIZE                 96
 
 #ifdef __cplusplus
 } /* extern "C" */
