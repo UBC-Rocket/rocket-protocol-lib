@@ -35,7 +35,7 @@ rp_packet_encode_result_t rp_packet_encode(uint8_t *packet, size_t packet_capaci
     size_t pb_encoded_size = pb_encode_stream.bytes_written;
 
     // Do we have enough room for the checksum?
-    if (pb_encoded_size >= (sizeof(pb_encoded) + 2)) {
+    if (pb_encoded_size >= (sizeof(pb_encoded) - 2)) {
         result.status = RP_CODEC_OVERFLOW;
         return result;
     }
