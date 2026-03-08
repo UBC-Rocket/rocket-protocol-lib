@@ -3,7 +3,6 @@
 #include <stdint.h>
 
 #include "rp/crc/crc.h"
-#include "unity_internals.h"
 
 void setUp(void)
 {

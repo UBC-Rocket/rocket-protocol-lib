@@ -62,3 +62,6 @@ build/
 !.vscode/extensions.json
 !.vscode/launch.json
 .DS_Store
+
+# Python
+.venv
