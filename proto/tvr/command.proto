@@ -8,7 +8,6 @@ message FlightCommand {
     SetPidGains     set_pid_gains = 2;
     SetReference    set_reference = 3;
     SetConfig       set_config    = 4;
-    SetPID          set_pid       = 5;
   }
 }
 
@@ -51,18 +50,4 @@ message SetConfig {
   float T_max     = 3;   // max thrust [N]
   float theta_min = 4;   // min gimbal angle [rad]
   float theta_max = 5;   // max gimbal angle [rad]
-}
-
-// All PID values 
-// TODO: need to rename temp variable names cause idk what they are yet
-message SetPID {
-  float x1 = 1;
-  float x2 = 2;
-  float x3 = 3;
-  float x4 = 4;
-  float x5 = 5;
-  float x6 = 6;
-  float x7 = 7;
-  float x8 = 8;
-  float x9 = 9;
 }

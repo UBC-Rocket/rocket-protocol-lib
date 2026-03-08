@@ -6,10 +6,10 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(TVR_VEC3, tvr_vec3_t, AUTO)
+PB_BIND(tvr_Vec3, tvr_Vec3, AUTO)
 
 
-PB_BIND(TVR_QUATERNION, tvr_quaternion_t, AUTO)
+PB_BIND(tvr_Quaternion, tvr_Quaternion, AUTO)
 
 
 
