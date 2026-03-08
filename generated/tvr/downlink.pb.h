@@ -13,13 +13,13 @@
 
 /* Struct definitions */
 /* FC → Ground envelope. Decode this, then switch on which_payload. */
-typedef struct tvr_downlink {
+typedef struct _tvr_Downlink {
     pb_size_t which_payload;
-    union tvr_downlink_payload {
-        tvr_telemetry_state_t telemetry;
-        tvr_system_status_t status;
+    union _tvr_Downlink_payload {
+        tvr_TelemetryState telemetry;
+        tvr_SystemStatus status;
     } payload;
-} tvr_downlink_t;
+} tvr_Downlink;
 
 
 #ifdef __cplusplus
@@ -27,30 +27,30 @@ extern "C" {
 #endif
 
 /* Initializer values for message structs */
-#define TVR_DOWNLINK_INIT_DEFAULT                {0, {TVR_TELEMETRY_STATE_INIT_DEFAULT}}
-#define TVR_DOWNLINK_INIT_ZERO                   {0, {TVR_TELEMETRY_STATE_INIT_ZERO}}
+#define tvr_Downlink_init_default                {0, {tvr_TelemetryState_init_default}}
+#define tvr_Downlink_init_zero                   {0, {tvr_TelemetryState_init_zero}}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define TVR_DOWNLINK_TELEMETRY_TAG               1
-#define TVR_DOWNLINK_STATUS_TAG                  2
+#define tvr_Downlink_telemetry_tag               1
+#define tvr_Downlink_status_tag                  2
 
 /* Struct field encoding specification for nanopb */
-#define TVR_DOWNLINK_FIELDLIST(X, a) \
+#define tvr_Downlink_FIELDLIST(X, a) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (payload,telemetry,payload.telemetry),   1) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (payload,status,payload.status),   2)
-#define TVR_DOWNLINK_CALLBACK NULL
-#define TVR_DOWNLINK_DEFAULT NULL
-#define tvr_downlink_t_payload_telemetry_MSGTYPE tvr_telemetry_state_t
-#define tvr_downlink_t_payload_status_MSGTYPE tvr_system_status_t
+#define tvr_Downlink_CALLBACK NULL
+#define tvr_Downlink_DEFAULT NULL
+#define tvr_Downlink_payload_telemetry_MSGTYPE tvr_TelemetryState
+#define tvr_Downlink_payload_status_MSGTYPE tvr_SystemStatus
 
-extern const pb_msgdesc_t tvr_downlink_t_msg;
+extern const pb_msgdesc_t tvr_Downlink_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define TVR_DOWNLINK_FIELDS &tvr_downlink_t_msg
+#define tvr_Downlink_fields &tvr_Downlink_msg
 
 /* Maximum encoded size of messages (where known) */
-#define TVR_DOWNLINK_PB_H_MAX_SIZE               TVR_DOWNLINK_SIZE
-#define TVR_DOWNLINK_SIZE                        98
+#define TVR_DOWNLINK_PB_H_MAX_SIZE               tvr_Downlink_size
+#define tvr_Downlink_size                        98
 
 #ifdef __cplusplus
 } /* extern "C" */

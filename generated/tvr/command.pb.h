@@ -11,75 +11,60 @@
 #endif
 
 /* Enum definitions */
-typedef enum tvr_state_command_type {
-    TVR_STATE_COMMAND_TYPE_CMD_NONE = 0,
-    TVR_STATE_COMMAND_TYPE_CMD_ARM = 1,
-    TVR_STATE_COMMAND_TYPE_CMD_LAUNCH = 2,
-    TVR_STATE_COMMAND_TYPE_CMD_ABORT = 3,
-    TVR_STATE_COMMAND_TYPE_CMD_LAND = 4
-} tvr_state_command_type_t;
+typedef enum _tvr_StateCommand_Type {
+    tvr_StateCommand_Type_CMD_NONE = 0,
+    tvr_StateCommand_Type_CMD_ARM = 1,
+    tvr_StateCommand_Type_CMD_LAUNCH = 2,
+    tvr_StateCommand_Type_CMD_ABORT = 3,
+    tvr_StateCommand_Type_CMD_LAND = 4
+} tvr_StateCommand_Type;
 
 /* Struct definitions */
 /* High-level state transitions */
-typedef struct tvr_state_command {
-    tvr_state_command_type_t type;
-} tvr_state_command_t;
+typedef struct _tvr_StateCommand {
+    tvr_StateCommand_Type type;
+} tvr_StateCommand;
 
 /* PID gain tuning (all gains in one message) */
-typedef struct tvr_set_pid_gains {
+typedef struct _tvr_SetPidGains {
     /* Attitude controller (diagonal of 3x3 gain matrices) */
     bool has_attitude_kp;
-    tvr_vec3_t attitude_kp; /* proportional */
+    tvr_Vec3 attitude_kp; /* proportional */
     bool has_attitude_kd;
-    tvr_vec3_t attitude_kd; /* derivative */
+    tvr_Vec3 attitude_kd; /* derivative */
     /* Z position PID */
     float z_kp;
     float z_ki;
     float z_kd;
     float z_integral_limit;
-} tvr_set_pid_gains_t;
+} tvr_SetPidGains;
 
 /* Setpoint / reference commands */
-typedef struct tvr_set_reference {
+typedef struct _tvr_SetReference {
     float z_ref; /* target height [m] */
     float vz_ref; /* target z velocity [m/s] */
     bool has_q_ref;
-    tvr_quaternion_t q_ref; /* target attitude (optional) */
-} tvr_set_reference_t;
+    tvr_Quaternion q_ref; /* target attitude (optional) */
+} tvr_SetReference;
 
 /* Physical / limit configuration */
-typedef struct tvr_set_config {
+typedef struct _tvr_SetConfig {
     float mass; /* vehicle mass [kg] */
-    float t_min; /* min thrust [N] */
-    float t_max; /* max thrust [N] */
+    float T_min; /* min thrust [N] */
+    float T_max; /* max thrust [N] */
     float theta_min; /* min gimbal angle [rad] */
     float theta_max; /* max gimbal angle [rad] */
-} tvr_set_config_t;
+} tvr_SetConfig;
 
-/* All PID values 
- TODO: need to rename temp variable names cause idk what they are yet */
-typedef struct tvr_set_pid {
-    float x1;
-    float x2;
-    float x3;
-    float x4;
-    float x5;
-    float x6;
-    float x7;
-    float x8;
-    float x9;
-} tvr_set_pid_t;
-
-typedef struct tvr_flight_command {
+typedef struct _tvr_FlightCommand {
     pb_size_t which_payload;
-    union tvr_flight_command_payload {
-        tvr_state_command_t state_cmd;
-        tvr_set_pid_gains_t set_pid_gains;
-        tvr_set_reference_t set_reference;
-        tvr_set_config_t set_config;
-        tvr_set_pid_t set_pid;
+    union _tvr_FlightCommand_payload {
+        tvr_StateCommand state_cmd;
+        tvr_SetPidGains set_pid_gains;
+        tvr_SetReference set_reference;
+        tvr_SetConfig set_config;
     } payload;
-} tvr_flight_command_t;
+} tvr_FlightCommand;
 
 
 #ifdef __cplusplus
@@ -87,148 +72,117 @@ extern "C" {
 #endif
 
 /* Helper constants for enums */
-#define _TVR_STATE_COMMAND_TYPE_MIN TVR_STATE_COMMAND_TYPE_CMD_NONE
-#define _TVR_STATE_COMMAND_TYPE_MAX TVR_STATE_COMMAND_TYPE_CMD_LAND
-#define _TVR_STATE_COMMAND_TYPE_ARRAYSIZE ((tvr_state_command_type_t)(TVR_STATE_COMMAND_TYPE_CMD_LAND+1))
+#define _tvr_StateCommand_Type_MIN tvr_StateCommand_Type_CMD_NONE
+#define _tvr_StateCommand_Type_MAX tvr_StateCommand_Type_CMD_LAND
+#define _tvr_StateCommand_Type_ARRAYSIZE ((tvr_StateCommand_Type)(tvr_StateCommand_Type_CMD_LAND+1))
 
 
-#define tvr_state_command_t_type_ENUMTYPE tvr_state_command_type_t
-
+#define tvr_StateCommand_type_ENUMTYPE tvr_StateCommand_Type
 
 
 
 
 
 /* Initializer values for message structs */
-#define TVR_FLIGHT_COMMAND_INIT_DEFAULT          {0, {TVR_STATE_COMMAND_INIT_DEFAULT}}
-#define TVR_STATE_COMMAND_INIT_DEFAULT           {_TVR_STATE_COMMAND_TYPE_MIN}
-#define TVR_SET_PID_GAINS_INIT_DEFAULT           {false, TVR_VEC3_INIT_DEFAULT, false, TVR_VEC3_INIT_DEFAULT, 0, 0, 0, 0}
-#define TVR_SET_REFERENCE_INIT_DEFAULT           {0, 0, false, TVR_QUATERNION_INIT_DEFAULT}
-#define TVR_SET_CONFIG_INIT_DEFAULT              {0, 0, 0, 0, 0}
-#define TVR_SET_PID_INIT_DEFAULT                 {0, 0, 0, 0, 0, 0, 0, 0, 0}
-#define TVR_FLIGHT_COMMAND_INIT_ZERO             {0, {TVR_STATE_COMMAND_INIT_ZERO}}
-#define TVR_STATE_COMMAND_INIT_ZERO              {_TVR_STATE_COMMAND_TYPE_MIN}
-#define TVR_SET_PID_GAINS_INIT_ZERO              {false, TVR_VEC3_INIT_ZERO, false, TVR_VEC3_INIT_ZERO, 0, 0, 0, 0}
-#define TVR_SET_REFERENCE_INIT_ZERO              {0, 0, false, TVR_QUATERNION_INIT_ZERO}
-#define TVR_SET_CONFIG_INIT_ZERO                 {0, 0, 0, 0, 0}
-#define TVR_SET_PID_INIT_ZERO                    {0, 0, 0, 0, 0, 0, 0, 0, 0}
+#define tvr_FlightCommand_init_default           {0, {tvr_StateCommand_init_default}}
+#define tvr_StateCommand_init_default            {_tvr_StateCommand_Type_MIN}
+#define tvr_SetPidGains_init_default             {false, tvr_Vec3_init_default, false, tvr_Vec3_init_default, 0, 0, 0, 0}
+#define tvr_SetReference_init_default            {0, 0, false, tvr_Quaternion_init_default}
+#define tvr_SetConfig_init_default               {0, 0, 0, 0, 0}
+#define tvr_FlightCommand_init_zero              {0, {tvr_StateCommand_init_zero}}
+#define tvr_StateCommand_init_zero               {_tvr_StateCommand_Type_MIN}
+#define tvr_SetPidGains_init_zero                {false, tvr_Vec3_init_zero, false, tvr_Vec3_init_zero, 0, 0, 0, 0}
+#define tvr_SetReference_init_zero               {0, 0, false, tvr_Quaternion_init_zero}
+#define tvr_SetConfig_init_zero                  {0, 0, 0, 0, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define TVR_STATE_COMMAND_TYPE_TAG               1
-#define TVR_SET_PID_GAINS_ATTITUDE_KP_TAG        1
-#define TVR_SET_PID_GAINS_ATTITUDE_KD_TAG        2
-#define TVR_SET_PID_GAINS_Z_KP_TAG               3
-#define TVR_SET_PID_GAINS_Z_KI_TAG               4
-#define TVR_SET_PID_GAINS_Z_KD_TAG               5
-#define TVR_SET_PID_GAINS_Z_INTEGRAL_LIMIT_TAG   6
-#define TVR_SET_REFERENCE_Z_REF_TAG              1
-#define TVR_SET_REFERENCE_VZ_REF_TAG             2
-#define TVR_SET_REFERENCE_Q_REF_TAG              3
-#define TVR_SET_CONFIG_MASS_TAG                  1
-#define TVR_SET_CONFIG_T_MIN_TAG                 2
-#define TVR_SET_CONFIG_T_MAX_TAG                 3
-#define TVR_SET_CONFIG_THETA_MIN_TAG             4
-#define TVR_SET_CONFIG_THETA_MAX_TAG             5
-#define TVR_SET_PID_X1_TAG                       1
-#define TVR_SET_PID_X2_TAG                       2
-#define TVR_SET_PID_X3_TAG                       3
-#define TVR_SET_PID_X4_TAG                       4
-#define TVR_SET_PID_X5_TAG                       5
-#define TVR_SET_PID_X6_TAG                       6
-#define TVR_SET_PID_X7_TAG                       7
-#define TVR_SET_PID_X8_TAG                       8
-#define TVR_SET_PID_X9_TAG                       9
-#define TVR_FLIGHT_COMMAND_STATE_CMD_TAG         1
-#define TVR_FLIGHT_COMMAND_SET_PID_GAINS_TAG     2
-#define TVR_FLIGHT_COMMAND_SET_REFERENCE_TAG     3
-#define TVR_FLIGHT_COMMAND_SET_CONFIG_TAG        4
-#define TVR_FLIGHT_COMMAND_SET_PID_TAG           5
+#define tvr_StateCommand_type_tag                1
+#define tvr_SetPidGains_attitude_kp_tag          1
+#define tvr_SetPidGains_attitude_kd_tag          2
+#define tvr_SetPidGains_z_kp_tag                 3
+#define tvr_SetPidGains_z_ki_tag                 4
+#define tvr_SetPidGains_z_kd_tag                 5
+#define tvr_SetPidGains_z_integral_limit_tag     6
+#define tvr_SetReference_z_ref_tag               1
+#define tvr_SetReference_vz_ref_tag              2
+#define tvr_SetReference_q_ref_tag               3
+#define tvr_SetConfig_mass_tag                   1
+#define tvr_SetConfig_T_min_tag                  2
+#define tvr_SetConfig_T_max_tag                  3
+#define tvr_SetConfig_theta_min_tag              4
+#define tvr_SetConfig_theta_max_tag              5
+#define tvr_FlightCommand_state_cmd_tag          1
+#define tvr_FlightCommand_set_pid_gains_tag      2
+#define tvr_FlightCommand_set_reference_tag      3
+#define tvr_FlightCommand_set_config_tag         4
 
 /* Struct field encoding specification for nanopb */
-#define TVR_FLIGHT_COMMAND_FIELDLIST(X, a) \
+#define tvr_FlightCommand_FIELDLIST(X, a) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (payload,state_cmd,payload.state_cmd),   1) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (payload,set_pid_gains,payload.set_pid_gains),   2) \
 X(a, STATIC,   ONEOF,    MESSAGE,  (payload,set_reference,payload.set_reference),   3) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (payload,set_config,payload.set_config),   4) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (payload,set_pid,payload.set_pid),   5)
-#define TVR_FLIGHT_COMMAND_CALLBACK NULL
-#define TVR_FLIGHT_COMMAND_DEFAULT NULL
-#define tvr_flight_command_t_payload_state_cmd_MSGTYPE tvr_state_command_t
-#define tvr_flight_command_t_payload_set_pid_gains_MSGTYPE tvr_set_pid_gains_t
-#define tvr_flight_command_t_payload_set_reference_MSGTYPE tvr_set_reference_t
-#define tvr_flight_command_t_payload_set_config_MSGTYPE tvr_set_config_t
-#define tvr_flight_command_t_payload_set_pid_MSGTYPE tvr_set_pid_t
+X(a, STATIC,   ONEOF,    MESSAGE,  (payload,set_config,payload.set_config),   4)
+#define tvr_FlightCommand_CALLBACK NULL
+#define tvr_FlightCommand_DEFAULT NULL
+#define tvr_FlightCommand_payload_state_cmd_MSGTYPE tvr_StateCommand
+#define tvr_FlightCommand_payload_set_pid_gains_MSGTYPE tvr_SetPidGains
+#define tvr_FlightCommand_payload_set_reference_MSGTYPE tvr_SetReference
+#define tvr_FlightCommand_payload_set_config_MSGTYPE tvr_SetConfig
 
-#define TVR_STATE_COMMAND_FIELDLIST(X, a) \
+#define tvr_StateCommand_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UENUM,    type,              1)
-#define TVR_STATE_COMMAND_CALLBACK NULL
-#define TVR_STATE_COMMAND_DEFAULT NULL
+#define tvr_StateCommand_CALLBACK NULL
+#define tvr_StateCommand_DEFAULT NULL
 
-#define TVR_SET_PID_GAINS_FIELDLIST(X, a) \
+#define tvr_SetPidGains_FIELDLIST(X, a) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  attitude_kp,       1) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  attitude_kd,       2) \
 X(a, STATIC,   SINGULAR, FLOAT,    z_kp,              3) \
 X(a, STATIC,   SINGULAR, FLOAT,    z_ki,              4) \
 X(a, STATIC,   SINGULAR, FLOAT,    z_kd,              5) \
 X(a, STATIC,   SINGULAR, FLOAT,    z_integral_limit,   6)
-#define TVR_SET_PID_GAINS_CALLBACK NULL
-#define TVR_SET_PID_GAINS_DEFAULT NULL
-#define tvr_set_pid_gains_t_attitude_kp_MSGTYPE tvr_vec3_t
-#define tvr_set_pid_gains_t_attitude_kd_MSGTYPE tvr_vec3_t
+#define tvr_SetPidGains_CALLBACK NULL
+#define tvr_SetPidGains_DEFAULT NULL
+#define tvr_SetPidGains_attitude_kp_MSGTYPE tvr_Vec3
+#define tvr_SetPidGains_attitude_kd_MSGTYPE tvr_Vec3
 
-#define TVR_SET_REFERENCE_FIELDLIST(X, a) \
+#define tvr_SetReference_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, FLOAT,    z_ref,             1) \
 X(a, STATIC,   SINGULAR, FLOAT,    vz_ref,            2) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  q_ref,             3)
-#define TVR_SET_REFERENCE_CALLBACK NULL
-#define TVR_SET_REFERENCE_DEFAULT NULL
-#define tvr_set_reference_t_q_ref_MSGTYPE tvr_quaternion_t
+#define tvr_SetReference_CALLBACK NULL
+#define tvr_SetReference_DEFAULT NULL
+#define tvr_SetReference_q_ref_MSGTYPE tvr_Quaternion
 
-#define TVR_SET_CONFIG_FIELDLIST(X, a) \
+#define tvr_SetConfig_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, FLOAT,    mass,              1) \
-X(a, STATIC,   SINGULAR, FLOAT,    t_min,             2) \
-X(a, STATIC,   SINGULAR, FLOAT,    t_max,             3) \
+X(a, STATIC,   SINGULAR, FLOAT,    T_min,             2) \
+X(a, STATIC,   SINGULAR, FLOAT,    T_max,             3) \
 X(a, STATIC,   SINGULAR, FLOAT,    theta_min,         4) \
 X(a, STATIC,   SINGULAR, FLOAT,    theta_max,         5)
-#define TVR_SET_CONFIG_CALLBACK NULL
-#define TVR_SET_CONFIG_DEFAULT NULL
+#define tvr_SetConfig_CALLBACK NULL
+#define tvr_SetConfig_DEFAULT NULL
 
-#define TVR_SET_PID_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, FLOAT,    x1,                1) \
-X(a, STATIC,   SINGULAR, FLOAT,    x2,                2) \
-X(a, STATIC,   SINGULAR, FLOAT,    x3,                3) \
-X(a, STATIC,   SINGULAR, FLOAT,    x4,                4) \
-X(a, STATIC,   SINGULAR, FLOAT,    x5,                5) \
-X(a, STATIC,   SINGULAR, FLOAT,    x6,                6) \
-X(a, STATIC,   SINGULAR, FLOAT,    x7,                7) \
-X(a, STATIC,   SINGULAR, FLOAT,    x8,                8) \
-X(a, STATIC,   SINGULAR, FLOAT,    x9,                9)
-#define TVR_SET_PID_CALLBACK NULL
-#define TVR_SET_PID_DEFAULT NULL
-
-extern const pb_msgdesc_t tvr_flight_command_t_msg;
-extern const pb_msgdesc_t tvr_state_command_t_msg;
-extern const pb_msgdesc_t tvr_set_pid_gains_t_msg;
-extern const pb_msgdesc_t tvr_set_reference_t_msg;
-extern const pb_msgdesc_t tvr_set_config_t_msg;
-extern const pb_msgdesc_t tvr_set_pid_t_msg;
+extern const pb_msgdesc_t tvr_FlightCommand_msg;
+extern const pb_msgdesc_t tvr_StateCommand_msg;
+extern const pb_msgdesc_t tvr_SetPidGains_msg;
+extern const pb_msgdesc_t tvr_SetReference_msg;
+extern const pb_msgdesc_t tvr_SetConfig_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define TVR_FLIGHT_COMMAND_FIELDS &tvr_flight_command_t_msg
-#define TVR_STATE_COMMAND_FIELDS &tvr_state_command_t_msg
-#define TVR_SET_PID_GAINS_FIELDS &tvr_set_pid_gains_t_msg
-#define TVR_SET_REFERENCE_FIELDS &tvr_set_reference_t_msg
-#define TVR_SET_CONFIG_FIELDS &tvr_set_config_t_msg
-#define TVR_SET_PID_FIELDS &tvr_set_pid_t_msg
+#define tvr_FlightCommand_fields &tvr_FlightCommand_msg
+#define tvr_StateCommand_fields &tvr_StateCommand_msg
+#define tvr_SetPidGains_fields &tvr_SetPidGains_msg
+#define tvr_SetReference_fields &tvr_SetReference_msg
+#define tvr_SetConfig_fields &tvr_SetConfig_msg
 
 /* Maximum encoded size of messages (where known) */
-#define TVR_COMMAND_PB_H_MAX_SIZE                TVR_FLIGHT_COMMAND_SIZE
-#define TVR_FLIGHT_COMMAND_SIZE                  56
-#define TVR_SET_CONFIG_SIZE                      25
-#define TVR_SET_PID_GAINS_SIZE                   54
-#define TVR_SET_PID_SIZE                         45
-#define TVR_SET_REFERENCE_SIZE                   32
-#define TVR_STATE_COMMAND_SIZE                   2
+#define TVR_COMMAND_PB_H_MAX_SIZE                tvr_FlightCommand_size
+#define tvr_FlightCommand_size                   56
+#define tvr_SetConfig_size                       25
+#define tvr_SetPidGains_size                     54
+#define tvr_SetReference_size                    32
+#define tvr_StateCommand_size                    2
 
 #ifdef __cplusplus
 } /* extern "C" */
