@@ -6,19 +6,22 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(tvr_FlightCommand, tvr_FlightCommand, AUTO)
+PB_BIND(TVR_FLIGHT_COMMAND, tvr_flight_command_t, AUTO)
 
 
-PB_BIND(tvr_StateCommand, tvr_StateCommand, AUTO)
+PB_BIND(TVR_STATE_COMMAND, tvr_state_command_t, AUTO)
 
 
-PB_BIND(tvr_SetPidGains, tvr_SetPidGains, AUTO)
+PB_BIND(TVR_SET_PID_GAINS, tvr_set_pid_gains_t, AUTO)
 
 
-PB_BIND(tvr_SetReference, tvr_SetReference, AUTO)
+PB_BIND(TVR_SET_REFERENCE, tvr_set_reference_t, AUTO)
 
 
-PB_BIND(tvr_SetConfig, tvr_SetConfig, AUTO)
+PB_BIND(TVR_SET_CONFIG, tvr_set_config_t, AUTO)
+
+
+PB_BIND(TVR_SET_PID, tvr_set_pid_t, AUTO)
 
 
 

@@ -12,10 +12,10 @@
 
 /* Struct definitions */
 /* FC health/readiness, sent at 1Hz and on state changes */
-typedef struct _tvr_SystemStatus {
+typedef struct tvr_system_status {
     uint32_t timestamp_ms; /* ms since boot */
     uint32_t uptime_ms; /* same as timestamp_ms (alias for clarity) */
-    tvr_FlightState flight_state;
+    tvr_flight_state_t flight_state;
     /* Sensor health (set once at startup, static after) */
     bool accel_ok;
     bool gyro_ok;
@@ -27,7 +27,7 @@ typedef struct _tvr_SystemStatus {
     uint32_t radio_tx_count; /* packets sent */
     uint32_t radio_rx_count; /* packets received */
     uint32_t cmd_rx_count; /* valid commands decoded */
-} tvr_SystemStatus;
+} tvr_system_status_t;
 
 
 #ifdef __cplusplus
@@ -35,24 +35,24 @@ extern "C" {
 #endif
 
 /* Initializer values for message structs */
-#define tvr_SystemStatus_init_default            {0, 0, _tvr_FlightState_MIN, 0, 0, 0, 0, 0, 0, 0, 0}
-#define tvr_SystemStatus_init_zero               {0, 0, _tvr_FlightState_MIN, 0, 0, 0, 0, 0, 0, 0, 0}
+#define TVR_SYSTEM_STATUS_INIT_DEFAULT           {0, 0, _TVR_FLIGHT_STATE_MIN, 0, 0, 0, 0, 0, 0, 0, 0}
+#define TVR_SYSTEM_STATUS_INIT_ZERO              {0, 0, _TVR_FLIGHT_STATE_MIN, 0, 0, 0, 0, 0, 0, 0, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define tvr_SystemStatus_timestamp_ms_tag        1
-#define tvr_SystemStatus_uptime_ms_tag           2
-#define tvr_SystemStatus_flight_state_tag        3
-#define tvr_SystemStatus_accel_ok_tag            4
-#define tvr_SystemStatus_gyro_ok_tag             5
-#define tvr_SystemStatus_baro1_ok_tag            6
-#define tvr_SystemStatus_baro2_ok_tag            7
-#define tvr_SystemStatus_gps_connected_tag       8
-#define tvr_SystemStatus_radio_tx_count_tag      10
-#define tvr_SystemStatus_radio_rx_count_tag      11
-#define tvr_SystemStatus_cmd_rx_count_tag        12
+#define TVR_SYSTEM_STATUS_TIMESTAMP_MS_TAG       1
+#define TVR_SYSTEM_STATUS_UPTIME_MS_TAG          2
+#define TVR_SYSTEM_STATUS_FLIGHT_STATE_TAG       3
+#define TVR_SYSTEM_STATUS_ACCEL_OK_TAG           4
+#define TVR_SYSTEM_STATUS_GYRO_OK_TAG            5
+#define TVR_SYSTEM_STATUS_BARO1_OK_TAG           6
+#define TVR_SYSTEM_STATUS_BARO2_OK_TAG           7
+#define TVR_SYSTEM_STATUS_GPS_CONNECTED_TAG      8
+#define TVR_SYSTEM_STATUS_RADIO_TX_COUNT_TAG     10
+#define TVR_SYSTEM_STATUS_RADIO_RX_COUNT_TAG     11
+#define TVR_SYSTEM_STATUS_CMD_RX_COUNT_TAG       12
 
 /* Struct field encoding specification for nanopb */
-#define tvr_SystemStatus_FIELDLIST(X, a) \
+#define TVR_SYSTEM_STATUS_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   timestamp_ms,      1) \
 X(a, STATIC,   SINGULAR, UINT32,   uptime_ms,         2) \
 X(a, STATIC,   SINGULAR, UENUM,    flight_state,      3) \
@@ -64,17 +64,17 @@ X(a, STATIC,   SINGULAR, BOOL,     gps_connected,     8) \
 X(a, STATIC,   SINGULAR, UINT32,   radio_tx_count,   10) \
 X(a, STATIC,   SINGULAR, UINT32,   radio_rx_count,   11) \
 X(a, STATIC,   SINGULAR, UINT32,   cmd_rx_count,     12)
-#define tvr_SystemStatus_CALLBACK NULL
-#define tvr_SystemStatus_DEFAULT NULL
+#define TVR_SYSTEM_STATUS_CALLBACK NULL
+#define TVR_SYSTEM_STATUS_DEFAULT NULL
 
-extern const pb_msgdesc_t tvr_SystemStatus_msg;
+extern const pb_msgdesc_t tvr_system_status_t_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define tvr_SystemStatus_fields &tvr_SystemStatus_msg
+#define TVR_SYSTEM_STATUS_FIELDS &tvr_system_status_t_msg
 
 /* Maximum encoded size of messages (where known) */
-#define TVR_STATUS_PB_H_MAX_SIZE                 tvr_SystemStatus_size
-#define tvr_SystemStatus_size                    42
+#define TVR_STATUS_PB_H_MAX_SIZE                 TVR_SYSTEM_STATUS_SIZE
+#define TVR_SYSTEM_STATUS_SIZE                   42
 
 #ifdef __cplusplus
 } /* extern "C" */
